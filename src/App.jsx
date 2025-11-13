@@ -1,35 +1,22 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Suspense } from "react";
+import "./App.css";
+import Countries from "./components/countries/Countries";
+
+const loadCountries = async () => {
+  const response = await fetch("https://restcountries.com/v3.1/all?fields=name,capital,flags,population,region,independent,ccn3");
+  return response.json();
+};
 
 function App() {
-  const [count, setCount] = useState(0)
 
+  const countriesPromise = loadCountries();
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Suspense fallback = {<h3>Countries are loading ...</h3>}>
+        <Countries countriesPromise = {countriesPromise}></Countries>
+      </Suspense>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
