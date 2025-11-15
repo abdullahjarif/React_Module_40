@@ -2,6 +2,8 @@ import { Suspense } from "react";
 import "./App.css";
 import Countries from "./components/countries/Countries";
 
+
+// for load countries using async await arrow function 
 const loadCountries = async () => {
   const response = await fetch("https://restcountries.com/v3.1/all?fields=name,capital,flags,population,region,independent,ccn3");
   return response.json();

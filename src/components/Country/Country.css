@@ -1,6 +1,40 @@
-.country{
+.country {
     border: 2px solid #35dbdb;
-    margin: 10px;
-    padding: 10px;
+    margin: 12px;
+    padding: 16px;
     border-radius: 20px;
+
+    /* background: #ffffff; */
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    cursor: pointer;
+}
+
+.country:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    border-color: #1ccccc;
+}
+
+.country:active {
+    transform: scale(0.97);
+}
+
+.country_visited {
+    background-color: #8ab48a;
+    border: 2px solid #2ecc71;
+    box-shadow: 0 4px 10px rgba(46, 204, 113, 0.3);
+    transform: scale(1.01);
+    opacity: 0.9;
+}
+
+/* smooth transitions for toggling */
+.country,
+.country_visited {
+    transition: 
+        background-color 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease,
+        transform 0.2s ease,
+        opacity 0.3s ease;
 }
