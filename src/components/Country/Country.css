@@ -1,40 +1,319 @@
-.country {
+/* ------------------------------------
+   GLOBAL ANIMATIONS
+------------------------------------ */
+
+@keyframes cardFade {
+    0% { opacity: 0; transform: translateY(20px) scale(0.97); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Stagger Animation: applies to each card automatically */
+.country_card {
+    animation: cardFade 0.6s ease forwards;
+    opacity: 0;
+}
+.country_card:nth-child(1) { animation-delay: 0.12s; }
+.country_card:nth-child(2) { animation-delay: 0.25s; }
+.country_card:nth-child(3) { animation-delay: 0.38s; }
+.country_card:nth-child(4) { animation-delay: 0.51s; }
+
+/* ------------------------------------
+   GLASSMORPHISM UTILITY
+------------------------------------ */
+.glass {
+    background: rgba(255, 255, 255, 0.18) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+
+
+/* ------------------------------------
+   MAIN CARD
+------------------------------------ */
+.country_card {
     border: 2px solid #35dbdb;
     margin: 12px;
-    padding: 16px;
+    padding: 18px;
     border-radius: 20px;
-
-    /* background: #ffffff; */
-    transition: all 0.3s ease-in-out;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-    cursor: pointer;
+    transition: transform 0.45s cubic-bezier(.21,.98,.6,1.01),
+                box-shadow 0.45s ease,
+                border-color 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    background: rgb(229, 239, 203);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
 }
 
-.country:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-    border-color: #1ccccc;
+/* Card hover */
+.country_card:hover {
+    transform: translateY(-8px) scale(1.025);
+    box-shadow: 0 16px 32px rgba(0,0,0,0.22);
+    border-color: #13c7c7;
 }
 
-.country:active {
+/* Card active click */
+.country_card:active {
     transform: scale(0.97);
 }
 
-.country_visited {
-    background-color: #8ab48a;
-    border: 2px solid #2ecc71;
-    box-shadow: 0 4px 10px rgba(46, 204, 113, 0.3);
-    transform: scale(1.01);
-    opacity: 0.9;
+/* Visited card special style */
+.visited_card {
+    background: linear-gradient(135deg, #dfffe0, #f1fff1);
+    border-color: #2ecc71;
+    box-shadow: 0 6px 20px rgba(46, 204, 113, 0.35);
 }
 
-/* smooth transitions for toggling */
-.country,
-.country_visited {
-    transition: 
-        background-color 0.3s ease,
-        border-color 0.3s ease,
-        box-shadow 0.3s ease,
-        transform 0.2s ease,
-        opacity 0.3s ease;
+
+/* ------------------------------------
+   HEADER
+------------------------------------ */
+.country_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    gap: 20px;
+}
+
+.country_header h3 {
+    text-align: left;
+    width: 200px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #1f2937;
+    transition: 0.3s ease;
+}
+
+.country_card:hover .country_header h3 {
+    color: #0b7285;
+}
+
+/* Badge */
+.status_badge {
+    padding: 6px 14px;
+    border-radius: 25px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.badge_not_visited {
+    background: #f1f5f9;
+    color: #475569;
+}
+
+.badge_not_visited:hover {
+    transform: scale(1.05);
+}
+
+.badge_visited {
+    background: #b4f5b4;
+    color: #166534;
+    box-shadow: 0 2px 8px rgba(22, 101, 52, 0.25);
+}
+
+
+/* ------------------------------------
+   BODY
+------------------------------------ */
+.country_body {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Flag */
+.country_flag img {
+    width: 100px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.18);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.country_card:hover .country_flag img {
+    transform: scale(1.12) rotate(2deg);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.25);
+}
+
+/* Info text */
+.country_info p {
+    margin: 4px 0;
+    font-size: 0.95rem;
+    color: #374151;
+    transition: 0.25s ease;
+}
+
+.country_card:hover .country_info p {
+    color: #111827;
+}
+
+
+/* ------------------------------------
+   BUTTONS
+------------------------------------ */
+.country_actions {
+    margin-top: 2rem;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.visit_btn,
+.flag_preview_btn {
+    padding: 10px 18px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: 0.25s ease, transform 0.15s ease;
+    font-size: 0.95rem;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Button ripple */
+.visit_btn:after,
+.flag_preview_btn:after {
+    content: "";
+    position: absolute;
+    background: rgba(255,255,255,0.4);
+    width: 0px;
+    height: 0px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.45s ease;
+}
+
+.visit_btn:active:after,
+.flag_preview_btn:active:after {
+    width: 160px;
+    height: 160px;
+    opacity: 1;
+}
+
+.visit_btn {
+    background: #4f46e5;
+    color: white;
+}
+
+.visit_btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(79, 70, 229, 0.45);
+    background: #4338ca;
+}
+
+.visited_btn {
+    background: #2ecc71 !important;
+}
+
+.flag_preview_btn {
+    background: #16a34a;
+    color: white;
+}
+
+.flag_preview_btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(22, 163, 74, 0.4);
+    background: #15803d;
+}
+
+
+/* ------------------------------------
+        DARK MODE (Toggle-ready)
+------------------------------------ */
+.dark .country_card {
+    background: rgba(22, 27, 34, 0.7);
+    border-color: rgba(100, 100, 100, 0.3);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.55);
+}
+
+.dark .country_header h3 {
+    color: #e2e8f0;
+}
+
+.dark .country_info p {
+    color: #d1d5db;
+}
+
+.dark .badge_not_visited {
+    background: rgba(255, 255, 255, 0.15);
+    color: #cbd5e1;
+}
+
+.dark .badge_visited {
+    background: rgba(34, 197, 94, 0.25);
+    color: #bbf7d0;
+}
+
+.dark .country_flag img {
+    box-shadow: 0 6px 18px rgba(255,255,255,0.15);
+}
+
+.dark .visit_btn {
+    background: #6366f1;
+}
+
+.dark .flag_preview_btn {
+    background: #16a34a;
+}
+
+
+/* ------------------------------------
+   RESPONSIVE BREAKPOINTS
+------------------------------------ */
+
+/* Extra Large >1600px */
+@media (min-width: 1600px) {
+    .country_card { max-width: 1300px; margin: 30px auto; padding: 30px; }
+    .country_body { gap: 4rem; }
+    .country_flag img { width: 160px; }
+    .country_header h3 { font-size: 24px; }
+}
+
+/* Large 1200–1599px */
+@media (max-width: 1599px) and (min-width: 1200px) {
+    .country_card { max-width: 1100px; margin: 26px auto; padding: 26px; }
+    .country_body { gap: 3rem; }
+    .country_flag img { width: 130px; }
+    .country_header h3 { font-size: 22px; }
+}
+
+/* Medium 900–1199px */
+@media (max-width: 1199px) and (min-width: 900px) {
+    .country_card { max-width: 900px; padding: 22px; }
+    .country_body { gap: 2.2rem; flex-wrap: wrap; }
+    .country_flag img { width: 110px; }
+    .country_header h3 { font-size: 20px; }
+}
+
+/* Tablet 600–899px */
+@media (max-width: 899px) and (min-width: 600px) {
+    .country_body { flex-direction: column; gap: 1.5rem; }
+    .country_flag img { width: 95px; }
+    .country_actions { flex-wrap: wrap; gap: 14px; }
+}
+
+/* Mobile <600px */
+@media (max-width: 600px) {
+    .country_card { padding: 14px; border-radius: 16px; }
+    .country_header { flex-direction: column; align-items: flex-start; gap: 6px; }
+    .country_body { flex-direction: column; gap: 1rem; }
+    .country_flag img { width: 75px; }
+    .country_actions {
+        display: grid;
+        grid-template-columns: 1fr;
+        width: 100%;
+        gap: 12px;
+    }
+    .visit_btn,
+    .flag_preview_btn {
+        width: 100%;
+        padding: 12px;
+        font-size: 1rem;
+    }
 }
