@@ -12,7 +12,8 @@ const Countries = ({ countriesPromise }) => {
   const showCountries = use(countriesPromise);
 
   const handleVisitedFlag = (flags) => {
-    console.log("flag is visited", flags);
+    const newVisitedFlags = [...visitFlags, flags];
+    setVisitedFlags(newVisitedFlags);
   };
 
   // use handler for button handle
@@ -58,6 +59,19 @@ const Countries = ({ countriesPromise }) => {
         <h2 style={{ marginBottom: "10px" }}>
           ✈️ Traveled So Far: {visitedCountries.length}
         </h2>
+
+        <div
+          style={{
+            display: "flex",
+            columnGap: "20px",
+            justifyContent: "center",
+          }}
+          className="country_flag"
+        >
+          {visitFlags.map((flags, index) => (
+            <img key={index} src={flags}></img>
+          ))}
+        </div>
 
         <ol>
           {visitedCountries.map((country) => (
